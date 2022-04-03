@@ -1,0 +1,130 @@
+{% extends "base_code.html" %}
+{% block content %}
+
+    <style>
+            .btn-grad {
+                background-image: linear-gradient(to right, #e52d27 0%, #b31217 51%, #e52d27 100%)
+            }
+
+            .btn-grad {
+                margin: 10px;
+                padding: 7px 1px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;
+                /* box-shadow: 0 0 20px #eee; */
+                border-radius: 10px;
+                display: block;
+            }
+
+            .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .movie-description {
+                flex: 1 1 auto;
+                padding: 1rem 1rem;
+                position: absolute;
+                bottom: 0;
+                background-image: linear-gradient(rgba(255, 0, 0, 0), rgb(0 0 0));
+                width: 100%;
+            }
+
+            .card:hover {
+                transform: scale(1.2);
+                transition: all 0.25s;
+                z-index: 99999;
+            }
+
+            .card-img-top {
+                object-fit: cover;
+            }
+
+            .movie-item {
+                padding: 0;
+                margin: 10px;
+            }
+        </style>
+
+    <div class="row mb-2">
+        <div class="col-md-3">
+            <img class="img-thumbnail" src="https://image.tmdb.org/t/p/w200{{ data.poster_path }}" alt="..."
+                 style="width: 500%">
+        </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h3 class="mb-0">{{ data.title }}</h3>
+                    <h4 style="color: gray;"><i>{{ data.tagline }}</i></h4>
+                    <div class="mb-1 text-muted"><strong>Release date:</strong> {{ data.release_date }} <br>
+                        <strong>Runtime: </strong> {{ data.runtime }} minutes <br>
+                        <strong>Rating: </strong> {{ data.vote_average }} / 10.0 <br>
+                        <strong>No. Of users Rated : </strong> {{ data.vote_count }} <br></div>
+                    <p class="card-text mb-auto">
+                    <h2>Summary</h2>
+                    <p>{{ data.overview }}</p></p>
+                    <hr>
+                    <h2>Genre</h2>
+                    <ul class="list-group list-group-horizontal ">
+                        {% for g in data.genres %}
+                            <li class="list-group-item bg-dark text-white">{{ g.name }} </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="comments/" class="btn btn-grad">View/Add Comments</a>
+                    <hr>
+                    <a href="add_to_wishlist/" class="btn btn-grad">Add to Wishlist</a>
+                    <hr>
+                    <button type="button" class="btn btn-grad" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                        Buy
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-dark" id="exampleModalLabel">Buy {{ data.title }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-dark"><strong>Are you sure you want to continue?</strong></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                            aria-label="Close">No
+                                    </button>
+                                    <a href="buy/">
+                                        <button type="button" class="btn btn-primary">Yes</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h1>Recommendations</h1>
+        <div class="row">
+            {% for m in recommendations.results %}
+                <div class="card text-white bg-dark mb-3" style="width: 15rem;">
+                    <img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="...">
+                    <div class="card-body movie-description">
+                        {% if not m.name %}
+                            <h5 class="card-title">{{ m.title }}</h5>
+                        {% else %}
+                            <h5 class="card-title">{{ m.name }}</h5>
+                        {% endif %}
+                        <p class="card-text">Released: {{ m.release_date }}</p>
+                        <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad">View Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

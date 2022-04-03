@@ -1,0 +1,91 @@
+{% extends "base_code.html" %}
+
+
+{% block content %}
+    {% if page == 1  %}
+        <div class="container my-1 py-1">
+        <div class="row d-flex justify-content-center">
+            <h4>Order History</h4>
+        </div>
+
+        <table class="table table-light table-striped">
+        <thead>
+        <tr>
+      <th scope="col">Movie Title</th>
+      <th scope="col">Order Date</th>
+       </tr>
+        </thead>
+            <tbody>
+         {% for c in orders %}
+
+    <tr>
+       <td>{{ c.movie_title }}</td>
+      <td>{{ c.created_at }}</td>
+          </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+</div>
+    {% elif page == 2 %}
+        <div class="container my-0 py-0">
+        <div class="row d-flex justify-content-center">
+            <h4>Comments and Ratings by You</h4>
+        </div>
+        </div>
+
+       {% for c in comments %}
+        <div class="container my-1 py-1">
+            <div class="row d-flex justify-content-left">
+                <div class="col-md-10 col-lg-9">
+                    <div class="card text-dark">
+                        <div class="card-body p-4">
+                            <hr class="my-0"/>
+                            <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                    <img
+                                            class="rounded-circle shadow-1-strong me-3"
+                                            src="/images/default.jpg"
+                                            alt="avatar"
+                                            width="60"
+                                            height="60"
+                                    />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{ c.user }}</h6>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <p class="mb-0">{{ c.created_at }}
+                                                <span class="badge bg-primary"> Rating: {{ c.rating }}</span>
+                                            </p>
+                                        </div>
+                                        <p class="mb-0">{{ c.comment }} </p>
+                                        <!--img src="/images/{{ c.image }}"></img-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% elif page == 3 %}
+        <div class="container my-0 py-0">
+        <div class="row d-flex justify-content-center">
+            <h4>Posters by uploaded by You</h4>
+        </div>
+        </div>
+
+        <div class="row">
+        {% for m in movies %}
+            <div class="card text-white bg-dark " style="width: 15rem;">
+                <img src="/images/{{ m.image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ m.title }}</h5>
+                   <!-- <p class="card-text">Uploaded By: {{ m.uploader }}</p> -->
+                    <p class="card-text">On {{ m.created_at }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {%  endif %}
+
+{% endblock %}

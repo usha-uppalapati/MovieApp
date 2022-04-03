@@ -1,0 +1,73 @@
+{% extends "base_code.html" %}
+{% block content %}
+    <style>
+
+            .btn-grad {
+                 background-image: linear-gradient(to right, #ab0303 0%, #190A05  51%, #a90303 100%)
+            }
+
+            .btn-grad {
+                margin: 10px;
+                padding: 7px 1px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;
+                /* box-shadow: 0 0 20px #eee; */
+                border-radius: 10px;
+                display: block;
+            }
+
+            .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .movie-description {
+                flex: 1 1 auto;
+                padding: 1rem 1rem;
+                position: absolute;
+                bottom: 0;
+                background-image: linear-gradient(rgba(255, 0, 0, 0), rgb(0 0 0));
+                width: 100%;
+            }
+
+            .card:hover {
+                transform: scale(1.2);
+                transition: all 0.25s;
+                z-index: 99999;
+            }
+
+            .card-img-top {
+                object-fit: cover;
+            }
+
+            .movie-item {
+                padding: 0;
+                margin: 10px;
+            }
+        </style>
+    <div class="row">
+        {% for m in items %}
+            <div class="card text-white bg-black " style="width: 15rem;">
+                <a href="/movie_details/{{ m.id }}/" class="btn btn-grad"><img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+{#                    {% if not m.name %}#}
+{#                        <h5 class="card-title">{{ m.title }}</h5>#}
+{#                    {% else %}#}
+{#                        <h5 class="card-title">{{ m.name }}</h5>#}
+{#                    {% endif %}#}
+
+
+
+{#                    <a href="/movie_details/{{ m.id }}/" class="btn btn-grad">View Details</a>#}
+                    <a href="{{ m.id }}/delete_from_wishlist/" class="btn btn-grad">Delete from Wishlist</a>
+{#                <a href="add_to_wishlist/" class="btn btn-primary">Add to Wishlist</a>#}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

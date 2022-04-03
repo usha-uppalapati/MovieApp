@@ -1,0 +1,13 @@
+{% extends "base_code.html" %}
+
+
+{% block content %}
+    {% if not title %}
+        <p> Sorry. Your Order is not placed. Try again later !!! </p>
+    {% else %}
+        <p> Order Placed for successfully for {{ title }}. Thank You for Shopping with us. </p>
+    {% endif %}
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

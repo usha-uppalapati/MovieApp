@@ -1,0 +1,12 @@
+{% extends "base_code.html" %}
+{% block content %}
+    <div class="row">
+{#        {% for m in data.results %}#}
+            <div class="card text-white bg-dark " style="width: 15rem;">
+                <img src="https://image.tmdb.org/t/p/w200{{ data.poster_path }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    {% if not m.name %}
+                        <h5 class="card-title">{{ data.title }}</h5>
+                    {% else %}
+                        <h5 class="card-title">{{ data.name }}</h5>
+                    {% endif %}
