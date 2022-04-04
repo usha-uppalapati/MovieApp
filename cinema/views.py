@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.http import HttpResponse
-from .models import comment, poster, order,WishList
+from .models import comment, poster, order, WishList
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.views import View
 
 TMDB_API_KEY = "850248f75917ae33a4baa0eee7b334cf"
+
 
 # Create your views here.
 class Movies(View):
@@ -58,35 +59,41 @@ def top_rated(request):
         "type": "movie_details",
         "currentPage": currentPage
     })
+
+
 @login_required(login_url='/signin/')
 def wishlist(request):
     # data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     # title = data.json()["title"]
-    currentPage="wishlist"
+    currentPage = "wishlist"
     items = reversed(WishList.objects.filter(user_id=request.user))
     print(items)
-    res=[]
-    for idx,movie in enumerate(items):
-        if idx==5:
+    res = []
+    for idx, movie in enumerate(items):
+        if idx == 5:
             break
-        res.append(requests.get(f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json())
+        res.append(requests.get(
+            f"https://api.themoviedb.org/3/movie/{movie.movie_id}?api_key={TMDB_API_KEY}&language=en-US").json())
 
     return render(request, '../templates/wishlist.html', {
         "title": "test",
         "items": res,
-        "currentPage":currentPage
+        "currentPage": currentPage
     })
     # return render(request, '../templates/add_to_wishlist.html')
+
+
 @login_required(login_url='/signin/')
 def add_to_wishlist(request, movie_id):
     # print(request)
     # print(movie_id)
     # movie_id = request.GET.get('movie_id')
-    if movie_id and WishList.objects.filter(movie_id=movie_id,user=request.user).count()==0:
-        WishList.objects.create(movie_id=movie_id,user=request.user).save()
+    if movie_id and WishList.objects.filter(movie_id=movie_id, user=request.user).count() == 0:
+        WishList.objects.create(movie_id=movie_id, user=request.user).save()
         # WishList.objects.filter(movie_id=movie_id,user=request.user).delete()
     # data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     return redirect("/wishlist/")
+
 
 @login_required(login_url='/signin/')
 def delete_from_wishlist(request, movie_id):
@@ -95,7 +102,7 @@ def delete_from_wishlist(request, movie_id):
     # movie_id = request.GET.get('movie_id')
     if movie_id:
         # WishList.objects.create(movie_id=movie_id,user=request.user).save()
-        WishList.objects.filter(movie_id=movie_id,user=request.user).delete()
+        WishList.objects.filter(movie_id=movie_id, user=request.user).delete()
     # data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
     # return render(request, "../templates/add_to_wishlist.html", {
     #     "data": data.json(),
@@ -116,7 +123,7 @@ def movie_details(request, movie_id):
             request.session['recently_browsed'].pop()
     else:
         request.session['recently_browsed'] = [movie_id]
-    request.session.modified=True
+    request.session.modified = True
     return render(request, "../templates/movie_detail.html", {
         "data": data.json(),
         "recommendations": recommendations.json(),
@@ -147,13 +154,13 @@ def search(request):
 
 
 def signup(request):
-    msg=''
+    msg = ''
     if request.method == "POST":
         filled_form = SignupForm(request.POST)
         if filled_form.is_valid():
             if filled_form.cleaned_data['password'] == filled_form.cleaned_data['confirmpassword']:
                 user = User.objects.create_user(filled_form.cleaned_data['name'], filled_form.cleaned_data['email'],
-                                            filled_form.cleaned_data['password'])
+                                                filled_form.cleaned_data['password'])
                 login(request, user)
                 # request.session.set_expiry(600)
                 return redirect('/')
@@ -164,7 +171,7 @@ def signup(request):
 
 
 def signin(request):
-    currentPage="signin"
+    currentPage = "signin"
     msg = ''
     if request.method == "POST":
         filled_form = SigninForm(request.POST)
@@ -174,14 +181,14 @@ def signin(request):
             if user is not None:
                 login(request, user)
                 # return render(request, '../templates/base_code.html')
-                #request.session.set_expiry(600)
-                #print(request.session.get_expiry_age())
+                # request.session.set_expiry(600)
+                # print(request.session.get_expiry_age())
                 nexturl = request.GET.get('next', '/')
                 return redirect(nexturl)
             else:
                 msg = 'Wrong Combo. Try Again !!'
     new = SigninForm()
-    return render(request, '../templates/Signin.html', {'SigninForm': new, 'msg': msg, "currentPage":currentPage})
+    return render(request, '../templates/Signin.html', {'SigninForm': new, 'msg': msg, "currentPage": currentPage})
 
 
 def signout(request):
@@ -196,7 +203,8 @@ def comments(request, movie_id):
         if not request.user.is_authenticated:
             # return HttpResponse("Need to login to post comments")
             base_url = '/signin/'  # 1 /signin/
-            query_string = urlencode({'next': '/movie_details/'+str(movie_id)+'/comments/'})  # 2 /movie_details/634649/
+            query_string = urlencode(
+                {'next': '/movie_details/' + str(movie_id) + '/comments/'})  # 2 /movie_details/634649/
             url = '{}?{}'.format(base_url, query_string)  # 3 /signin/?next=movie_details/634649/comments
             return redirect(url)  # 4
         else:
@@ -220,7 +228,6 @@ def comments(request, movie_id):
 
 
 def posters(request):
-
     currentPage = "posters"
     if request.method == "POST":
         user = request.user
@@ -236,21 +243,23 @@ def posters(request):
                 photo = form.save(commit=False)
                 photo.uploader = user
                 # now we can save
-                photo.image_id=random.randint(0,100000)
+                photo.image_id = random.randint(0, 100000)
                 photo.save()
             return redirect(f"../posters/")
     posters = reversed(poster.objects.all())
     return render(request, "../templates/posters.html", {
         "posters": posters,
-        "currentPage":currentPage
+        "currentPage": currentPage
     })
+
 
 @login_required(login_url='/signin/')
 def delete_poster(request, image_id):
     # Poster ID
     if image_id:
-        poster.objects.filter(image_id=image_id,uploader=request.user).delete()
+        poster.objects.filter(image_id=image_id, uploader=request.user).delete()
     return redirect("/posters/")
+
 
 @login_required(login_url='/signin/')
 def buy(request, movie_id):
@@ -269,8 +278,9 @@ def buy(request, movie_id):
     else:
         return render(request, "../templates/buy.html")
 
+
 @login_required(login_url='/signin/')
-def profile(request,path):
+def profile(request, path):
     user = request.user
     user_id = User.objects.get(username__exact=user).id
     if path == 'orders_history':
@@ -282,6 +292,7 @@ def profile(request,path):
     elif path == 'uploaded_movies':
         movies = reversed(poster.objects.filter(uploader=user_id))
         return render(request, "../templates/profile.html", {"movies": movies, 'page': 3, })
+
 
 def forgot(request):
     if request.method == "POST":
@@ -300,6 +311,7 @@ def forgot(request):
             return render(request, "../templates/forgotpassword.html")
     else:
         return render(request, "../templates/forgotpassword.html")
+
 
 @login_required(login_url='/signin/')
 def change(request):
@@ -323,7 +335,9 @@ class Pwdsentconfirm(View):
     message2 = "Sign In Again with the sent password."
 
     def get(self, request):
-        return render(request, "../templates/pwd_change_signin_again.html", {"message1": self.message1, "message2": self.message2})
+        return render(request, "../templates/pwd_change_signin_again.html",
+                      {"message1": self.message1, "message2": self.message2})
+
 
 class Pwdchangeconfirm(Pwdsentconfirm):
     message1 = "Your Password is changed successfully."
@@ -337,7 +351,7 @@ def recently_browsed(request):
     if 'recently_browsed' in request.session:
         for id in request.session['recently_browsed']:
             res.append(requests.get(
-            f"https://api.themoviedb.org/3/movie/{id}?api_key={TMDB_API_KEY}&language=en-US").json())
+                f"https://api.themoviedb.org/3/movie/{id}?api_key={TMDB_API_KEY}&language=en-US").json())
     if len(res) == 0:
         msg = 'No Browsing History captured yet'
     return render(request, '../templates/recently_browsed.html', {
