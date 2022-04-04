@@ -24,7 +24,6 @@ urlpatterns = [
  path('forgotpassword/', views.forgot, name='forgot'),
  path('passwordsent/', Pwdsentconfirm.as_view()),
  path('passwordchanged/', Pwdchangeconfirm.as_view()),
- path('trending_day/', Movies.as_view()),
  path('top_rated/', views.top_rated,name='top_rated'),
  path('now_playing/', views.now_playing,name='now_playing'),
  path('wishlist/', views.wishlist, name='wishlist'),
