@@ -1,0 +1,46 @@
+.btn-grad {
+                 background-image: linear-gradient(to right, #ab0303 0%, #190A05  51%, #a90303 100%)
+            }
+
+            .btn-grad {
+                margin: 10px;
+                padding: 7px 1px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;
+                /* box-shadow: 0 0 20px #eee; */
+                border-radius: 10px;
+                display: block;
+            }
+
+            .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .movie-description {
+                flex: 1 1 auto;
+                padding: 1rem 1rem;
+                position: absolute;
+                bottom: 0;
+                background-image: linear-gradient(rgba(255, 0, 0, 0), rgb(0 0 0));
+                width: 100%;
+            }
+
+            .card:hover {
+                transform: scale(1.2);
+                transition: all 0.25s;
+                z-index: 99999;
+            }
+
+            .card-img-top {
+                object-fit: cover;
+            }
+
+            .movie-item {
+                padding: 0;
+                margin: 10px;
+            }
