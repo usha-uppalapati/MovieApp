@@ -74,8 +74,8 @@
     </div>
     <div class="row">
         {% for m in posters %}
-            <div class="card text-white bg-dark " style="width: 15rem;">
-                <img src="/images/{{ m.image }}" class="card-img-top" alt="...">
+            <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 30px">
+                <img src="/images/{{ m.image }}"  class="btn btn-grad" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ m.title }}</h5>
                     <p class="card-text">Uploaded By: {{ m.uploader }}</p>
