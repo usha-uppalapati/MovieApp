@@ -187,7 +187,7 @@ def signin(request):
 def signout(request):
     currentPage = "signout"
     logout(request)
-    return render(request, '../templates/Signout.html',{"currentPage":currentPage})
+    return redirect('/signin/')
 
 
 def comments(request, movie_id):
