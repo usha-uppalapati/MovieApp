@@ -180,7 +180,6 @@ def signin(request):
                                 password=filled_form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                # return render(request, '../templates/base_code.html')
                 # request.session.set_expiry(600)
                 # print(request.session.get_expiry_age())
                 nexturl = request.GET.get('next', '/')
@@ -209,11 +208,10 @@ def comments(request, movie_id):
             return redirect(url)  # 4
         else:
             form = CommentForm(request.POST)
-            # return HttpResponse('<p>'+ str(form)+'</p>')
+            # storing the posted data
             if form.is_valid():
                 comment(comment=form.cleaned_data['comment'], user=user, movie_id=movie_id,
                         rating=form.cleaned_data['rating']).save()
-                # form.save()
             return redirect(f"/movie_details/{movie_id}/comments/")
     else:
         data = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US")
@@ -232,7 +230,7 @@ def posters(request):
     if request.method == "POST":
         user = request.user
         if not request.user.is_authenticated:
-            # return HttpResponse("Need to login to upload Posters")
+            # "Need to login to upload Posters"
             base_url = '/signin/'  # 1 /signin/
             query_string = urlencode({'next': '/posters/'})  # 2 /posters/
             url = '{}?{}'.format(base_url, query_string)  # 3 /signin/?next=/posters/
@@ -281,6 +279,7 @@ def buy(request, movie_id):
 
 @login_required(login_url='/signin/')
 def profile(request, path):
+    # profile page to show user's history only after sign in
     user = request.user
     user_id = User.objects.get(username__exact=user).id
     if path == 'orders_history':
@@ -301,9 +300,9 @@ def forgot(request):
             name = filled_form.cleaned_data['name']
             record = User.objects.get(username__exact=name)
             email = record.email
-            # change field
+            # generate new pwd
             pwd = User.objects.make_random_password()
-            record.set_password(pwd)  # replace with your real password
+            record.set_password(pwd)  # replace with new password
             record.save()
             res = send_mail('Password reset for CiNeWorld ', 'New password is ' + pwd, None, [email])
             return redirect("../passwordsent/")
@@ -318,6 +317,7 @@ def change(request):
     if request.method == "POST":
         filled_form = ChangePasswordForm(request.POST)
         if filled_form.is_valid():
+            # get password from form
             pssword = filled_form.cleaned_data['password']
             user = request.user
             record = User.objects.get(username__exact=user)
@@ -348,10 +348,12 @@ def recently_browsed(request):
     currentPage = "recently_browsed"
     res = []
     msg = ''
+    # The request.session is created and maintained in the movie_details function
     if 'recently_browsed' in request.session:
         for id in request.session['recently_browsed']:
             res.append(requests.get(
                 f"https://api.themoviedb.org/3/movie/{id}?api_key={TMDB_API_KEY}&language=en-US").json())
+    # Check if it's the first time browsing
     if len(res) == 0:
         msg = 'No Browsing History captured yet'
     return render(request, '../templates/recently_browsed.html', {
