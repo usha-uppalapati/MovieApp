@@ -1,60 +1,6 @@
 {% extends "base_code.html" %}
 {% block content %}
-    {% load static %}
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
-    </head>
-
-    <div class="row">
-        <style>
-
-            .btn-grad {
-                 background-image: linear-gradient(to right, #ab0303 0%, #190A05  51%, #a90303 100%)
-            }
-
-            .btn-grad {
-                margin: 10px;
-                padding: 7px 1px;
-                text-align: center;
-                text-transform: uppercase;
-                transition: 0.5s;
-                background-size: 200% auto;
-                color: white;
-                /* box-shadow: 0 0 20px #eee; */
-                border-radius: 10px;
-                {#display: block;#}
-            }
-
-            .btn-grad:hover {
-                background-position: right center; /* change the direction of the change here */
-                color: #fff;
-                text-decoration: none;
-            }
-
-            .movie-description {
-                flex: 1 1 auto;
-                padding: 1rem 1rem;
-                position: absolute;
-                bottom: 0;
-                background-image: linear-gradient(rgba(255, 0, 0, 0), rgb(0 0 0));
-                width: 100%;
-            }
-
-            .card:hover {
-                transform: scale(1.2);
-                transition: all 0.25s;
-                z-index: 99999;
-            }
-
-            .card-img-top {
-                object-fit: cover;
-            }
-
-            .movie-item {
-                padding: 0;
-                margin: 10px;
-            }
-        </style>
+   <div class="row">
 
         <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px">{% if header == 'Top results of the Day' %}<i class="bi bi-file-arrow-up"></i> {% elif header == 'Trending movies of the week' %}<i class="bi bi-graph-up"></i>  {% endif %} {{ header }}</h1>
         {% for m in data.results %}

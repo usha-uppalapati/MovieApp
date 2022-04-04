@@ -20,7 +20,7 @@ TMDB_API_KEY = "850248f75917ae33a4baa0eee7b334cf"
 class Movies(View):
     type = "movie"
     time_window = "day"
-    header = "Top results of the Day "
+    header = "Top results of the Day"
     currentPage = "home"
 
     def get(self, request):
@@ -35,28 +35,32 @@ class Trending(Movies):
     # movie_list = Movies.objects.all().order_by('-release_date')[:10]
     type = "movie"
     time_window = "week"
-    header = "Trending movies of the week "
+    header = "Trending movies of the week"
     currentPage = "trending"
 
 
 def now_playing(request):
     currentPage = "nowplaying"
+    header = "Now Playing"
     data = requests.get(
         f"https://api.themoviedb.org/3/movie/now_playing?api_key={TMDB_API_KEY}")
     return render(request, '../templates/results.html', {
         "data": data.json(),
         "type": "movie_details",
+        "header": header,
         "currentPage": currentPage
     })
 
 
 def top_rated(request):
     currentPage = "toprated"
+    header = "Top Rated movies"
     data = requests.get(
         f"https://api.themoviedb.org/3/movie/top_rated?api_key={TMDB_API_KEY}&language=en-US")
     return render(request, '../templates/results.html', {
         "data": data.json(),
         "type": "movie_details",
+        "header": header,
         "currentPage": currentPage
     })
 
