@@ -54,6 +54,7 @@
         </style>
 
     <div class="row">
+        <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px"> {% if header == 'Now Playing' %}<i class="bi bi-play-circle"></i> {% elif header == 'Top Rated movies' %}<i class="bi bi-arrow-up-circle"></i>  {% endif %}{{ header}}</h1>
         {% for m in data.results %}
 {#            <div class="card text-white bg-dark mb-3 movie-item" style="width: 15rem;">#}
             <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 30px">

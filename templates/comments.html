@@ -1,5 +1,29 @@
 {% extends "base_code.html" %}
+<style>
+          .btn-grad {
+                 background-image: linear-gradient(to right, #ab0303 0%, #190A05  51%, #a90303 100%)
+            }
 
+
+            .btn-grad {
+                margin: 10px;
+                padding: 7px 1px;
+                text-align: center;
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;
+                /* box-shadow: 0 0 20px #eee; */
+                border-radius: 10px;
+                display: block;
+            }
+
+            .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+            }
+</style>
 
 {% block content %}
     <h1>Comment page for {{ title }} </h1>
@@ -20,11 +44,10 @@
                 <option value="5">Excellent</option>
             </select>
         </div>
-        <br>
         <!--div class="input-group mb-1">
   <input type="file" class="form-control" id="image" name="image">
   </div-->
-        <button type="submit" class="btn btn-danger">Submit</button>
+        <button type="submit" class="btn btn-grad" style="width:300px; margin-left: 0; margin-top: 20px">Submit</button>
     </form>
     <hr>
     <div class="container my-0 py-0">
@@ -52,7 +75,7 @@
                                         <h6 class="fw-bold mb-1">{{ c.user }}</h6>
                                         <div class="d-flex align-items-center mb-3">
                                             <p class="mb-0">{{ c.created_at }}
-                                                <span class="badge bg-danger"> Rating: {{ c.rating }}/5</span>
+                                                <span class="badge bg-primary"> Rating: {{ c.rating }}/5</span>
                                             </p>
                                         </div>
                                         <p class="mb-0">{{ c.comment }} </p>
