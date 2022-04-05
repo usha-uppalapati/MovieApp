@@ -162,14 +162,17 @@ def signup(request):
     if request.method == "POST":
         filled_form = SignupForm(request.POST)
         if filled_form.is_valid():
-            if filled_form.cleaned_data['password'] == filled_form.cleaned_data['confirmpassword']:
-                user = User.objects.create_user(filled_form.cleaned_data['name'], filled_form.cleaned_data['email'],
-                                                filled_form.cleaned_data['password'])
-                login(request, user)
-                # request.session.set_expiry(600)
-                return redirect('/')
+            if not User.objects.filter(username=filled_form.cleaned_data['name']):
+                if filled_form.cleaned_data['password'] == filled_form.cleaned_data['confirmpassword']:
+                    user = User.objects.create_user(filled_form.cleaned_data['name'], filled_form.cleaned_data['email'],
+                                                    filled_form.cleaned_data['password'])
+                    login(request, user)
+                    # request.session.set_expiry(600)
+                    return redirect('/')
+                else:
+                    msg = "Passwords don't match"
             else:
-                msg = "Passwords don't match"
+                msg = 'Please choose another User Name'
     new = SignupForm()
     return render(request, '../templates/Signup.html', {'SignupForm': new, 'msg': msg})
 
