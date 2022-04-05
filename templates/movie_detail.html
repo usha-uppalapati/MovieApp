@@ -1,7 +1,7 @@
 {% extends "base_code.html" %}
 {% block content %}
 
-   <div class="row mb-2">
+    <div class="row mb-2">
         <div class="col-md-3">
             <img class="img-thumbnail" src="https://image.tmdb.org/t/p/w200{{ data.poster_path }}" alt="..."
                  style="width: 500%">
@@ -65,15 +65,16 @@
         <div class="row">
             {% for m in recommendations.results %}
                 <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 25px;">
-                   <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad"><img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
+                    <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad"><img
+                            src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
                     <div class="card-body movie-description">
-{#                        {% if not m.name %}#}
-{#                            <h5 class="card-title">{{ m.title }}</h5>#}
-{#                        {% else %}#}
-{#                            <h5 class="card-title">{{ m.name }}</h5>#}
-{#                        {% endif %}#}
-{#                        <p class="card-text">Released: {{ m.release_date }}</p>#}
-{#                        #}
+                        {#                        {% if not m.name %}#}
+                        {#                            <h5 class="card-title">{{ m.title }}</h5>#}
+                        {#                        {% else %}#}
+                        {#                            <h5 class="card-title">{{ m.name }}</h5>#}
+                        {#                        {% endif %}#}
+                        {#                        <p class="card-text">Released: {{ m.release_date }}</p>#}
+                        {#                        #}
                     </div>
                 </div>
             {% endfor %}

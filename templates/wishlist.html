@@ -2,22 +2,22 @@
 {% block content %}
 
     <div class="row">
-    <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px"><i class="bi bi-suit-heart"></i> My List</h1>
+        <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px"><i class="bi bi-suit-heart"></i> My List</h1>
         {% for m in items %}
             <div class="card text-white bg-black " style="width: 15rem;">
-                <a href="/movie_details/{{ m.id }}/" class="btn btn-grad"><img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
+                <a href="/movie_details/{{ m.id }}/" class="btn btn-grad"><img
+                        src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
                 <div class="card-body">
-{#                    {% if not m.name %}#}
-{#                        <h5 class="card-title">{{ m.title }}</h5>#}
-{#                    {% else %}#}
-{#                        <h5 class="card-title">{{ m.name }}</h5>#}
-{#                    {% endif %}#}
+                    {#                    {% if not m.name %}#}
+                    {#                        <h5 class="card-title">{{ m.title }}</h5>#}
+                    {#                    {% else %}#}
+                    {#                        <h5 class="card-title">{{ m.name }}</h5>#}
+                    {#                    {% endif %}#}
 
 
-
-{#                    <a href="/movie_details/{{ m.id }}/" class="btn btn-grad">View Details</a>#}
+                    {#                    <a href="/movie_details/{{ m.id }}/" class="btn btn-grad">View Details</a>#}
                     <a href="{{ m.id }}/delete_from_wishlist/" class="btn btn-grad">Delete from Wishlist</a>
-{#                <a href="add_to_wishlist/" class="btn btn-primary">Add to Wishlist</a>#}
+                    {#                <a href="add_to_wishlist/" class="btn btn-primary">Add to Wishlist</a>#}
 
                 </div>
             </div>

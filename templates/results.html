@@ -4,21 +4,24 @@
 {% block content %}
 
     <div class="row">
-        <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px"> {% if header == 'Now Playing' %}<i class="bi bi-play-circle"></i> {% elif header == 'Top Rated movies' %}<i class="bi bi-arrow-up-circle"></i>  {% endif %}{{ header}}</h1>
+        <h1 style="font-family: 'Yu Gothic UI Semibold'; font-size: 30px"> {% if header == 'Now Playing' %}
+            <i class="bi bi-play-circle"></i> {% elif header == 'Top Rated movies' %}
+            <i class="bi bi-arrow-up-circle"></i>  {% endif %}{{ header }}</h1>
         {% for m in data.results %}
-{#            <div class="card text-white bg-dark mb-3 movie-item" style="width: 15rem;">#}
+            {#            <div class="card text-white bg-dark mb-3 movie-item" style="width: 15rem;">#}
             <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 30px">
-                <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad"><img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
+                <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad"><img
+                        src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
                 <div class="card-body movie-description">
-{#                    {% if not m.name %}#}
-{#                        <h5 class="card-title">{{ m.title }}</h5>#}
-{#                    {% else %}#}
-{#                        <h5 class="card-title">{{ m.name }}</h5>#}
-{#                    {% endif %}#}
-{#                    <p class="card-text">Released: {{ m.release_date }}</p>#}
-{#                Nirali's Edit#}
-{#                    <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad">View Details</a>#}
-{#                    <a href="{{ m.id }}/add_to_wishlist/" class="btn btn-grad">Add to Wishlist</a>#}
+                    {#                    {% if not m.name %}#}
+                    {#                        <h5 class="card-title">{{ m.title }}</h5>#}
+                    {#                    {% else %}#}
+                    {#                        <h5 class="card-title">{{ m.name }}</h5>#}
+                    {#                    {% endif %}#}
+                    {#                    <p class="card-text">Released: {{ m.release_date }}</p>#}
+                    {#                Nirali's Edit#}
+                    {#                    <a href="/{{ type }}/{{ m.id }}/" class="btn btn-grad">View Details</a>#}
+                    {#                    <a href="{{ m.id }}/add_to_wishlist/" class="btn btn-grad">Add to Wishlist</a>#}
 
                 </div>
             </div>

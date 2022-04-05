@@ -4,9 +4,10 @@
     <h5>{{ msg }}</h5>
     <div class="row">
         {% for m in items %}
-           <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 30px">
-                <a href="/movie_details/{{ m.id }}/" class="btn btn-grad"><img src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
-           </div>
+            <div class="card text-white bg-black mb-3 movie-item" style="width: 13rem; margin-left: 30px">
+                <a href="/movie_details/{{ m.id }}/" class="btn btn-grad"><img
+                        src="https://image.tmdb.org/t/p/w200{{ m.poster_path }}" class="card-img-top" alt="..."></a>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
